@@ -24,7 +24,7 @@ GOOGLE_MAPS_API_KEY = 'AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE'
 DEBUG = True
 
 # ALLOWED_HOSTS = ['ecommerdjango-production.up.railway.app', 'https://ecommerdjango-production.up.railway.app']
-ALLOWED_HOSTS = ['ecommerdjango-production.up.railway.app', 'localhost']
+ALLOWED_HOSTS = ['ecommerdjango-production.up.railway.app', 'localhost', '127.0.0.1']
 CSRF_TRUSTED_ORIGINS = ['https://ecommerdjango-production.up.railway.app']
 AUTH_USER_MODEL = 'auth.User'  
 
