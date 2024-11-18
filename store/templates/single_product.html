@@ -1,0 +1,809 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href={% static "img/fav.png" %}>
+	<!-- Author Meta -->
+	<meta name="author" content="CodePixar">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>Karma Shop</title>
+	<!--
+			CSS
+			============================================= -->
+	<link rel="stylesheet" href={% static "css/linearicons.css" %} />
+	<link rel="stylesheet" href={% static "css/font-awesome.min.css" %} />
+	<link rel="stylesheet" href={% static "css/themify-icons.css" %} />
+	<link rel="stylesheet" href={% static "css/bootstrap.css" %} />
+	<link rel="stylesheet" href={% static "css/owl.carousel.css" %} />
+	<link rel="stylesheet" href={% static "css/nice-select.css" %} />
+	<link rel="stylesheet" href={% static "css/nouislider.min.css" %} />
+	<link rel="stylesheet" href={% static "css/ion.rangeSlider.css" %} />
+	<link rel="stylesheet" href={% static "css/ion.rangeSlider.skinFlat.css" %} />
+	<link rel="stylesheet" href={% static "css/magnific-popup.css" %} />
+	<link rel="stylesheet" href={% static "css/main.css" %} />
+	<link rel="stylesheet" href={% static "css/cart.css" %} />
+</head>
+
+<body>
+
+	<!-- Start Header Area -->
+	<header class="header_area sticky-header">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light main_box">
+				<div class="container">
+					<!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="{% url 'home' %}">
+						<img src="{% static 'img/logo.png' %}" alt="Logo" loading="lazy" />
+					</a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse"
+						data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+						aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<ul class="nav navbar-nav menu_nav ml-auto">
+							<li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Trang chủ</a></li>
+
+							<!-- Shop dropdown -->
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Cửa hàng</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% url 'category' %}">Danh mục cửa
+											hàng</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'checkout' %}">Kiểm tra sản
+											phẩm</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'cart' %}">Giỏ hàng</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'confirmation' %}">Xác
+											nhận</a></li>
+								</ul>
+							</li>
+
+							<!-- Blog dropdown -->
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Blog</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'single-blog' %}">Chi tiết
+											blog</a></li>
+								</ul>
+							</li>
+
+							<!-- Pages dropdown -->
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Trang</a>
+								<ul class="dropdown-menu">
+									{% if user.is_authenticated %}
+									<li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Hồ sơ</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'update_profile' %}">Cập nhật
+											hồ sơ</a></li>
+									<!-- Link Logout -->
+									<li class="nav-item">
+										<a class="nav-link" href="{% url 'logout' %}" id="logout-link">Đăng xuất</a>
+									</li>
+									<script>
+										document.getElementById("logout-link").addEventListener("click", function () {
+											// Xóa cartCount khỏi localStorage và sessionStorage khi người dùng đăng xuất
+											localStorage.removeItem("cartCount");
+											sessionStorage.removeItem("cartCount");
+
+											// Đảm bảo hiển thị cart count trở về 0 nếu có phần tử cart-count
+											const cartCountElement = document.getElementById("cart-count");
+											if (cartCountElement) {
+												cartCountElement.innerText = "0";
+											}
+										});
+									</script>
+									{% else %}
+									<li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Đăng kí</a>
+									</li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Đăng nhập</a></li>
+									{% endif %}
+									<li class="nav-item"><a class="nav-link" href="{% url 'updatePassword' %}">Cập nhật
+											mật khẩu</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'tracking' %}">Theo dõi</a>
+									</li>
+								</ul>
+							</li>
+
+							<!-- Orders dropdown for admin -->
+							{% if user.is_superuser %}
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+									aria-haspopup="true" aria-expanded="false">Đơn đặt hàng</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="{% url 'shipped_dash' %}">Đơn đặt
+											hàng đã vận chuyển</a></li>
+									<li class="nav-item"><a class="nav-link" href="{% url 'not_shipped_dash' %}">Đơn
+											hàng chưa được vận chuyển</a></li>
+								</ul>
+							</li>
+							{% endif %}
+
+							<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Liên hệ</a></li>
+						</ul>
+
+						<!-- Cart and Search icons -->
+						<ul class="nav navbar-nav navbar-right">
+							<li class="nav-item">
+								<a href="{% url 'cart' %}" class="cart">
+									<span class="ti-bag"></span>
+									<span id="cart-count" class="badge badge-count" style="color: white">0</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<button class="search">
+									<span class="lnr lnr-magnifier" id="search"></span>
+								</button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<!-- Search input box, hidden initially and toggled by JavaScript -->
+		<div class="search_input" id="search_input_box">
+			<div class="container">
+				<form method="POST" action="{% url 'product_search' %}">
+					{% csrf_token %}
+					<input type="text" name="query" class="form-control" placeholder="Tìm kiếm" />
+					<button type="submit" class="btn"><span class="lnr lnr-magnifier"></span></button>
+				</form>
+			</div>
+		</div>
+	</header>
+	<script>
+		// Toggle search input visibility
+		document.querySelector('.search').addEventListener('click', function () {
+			document.getElementById('search_input_box').classList.toggle('show');
+		});
+	</script>
+	<!-- End Header Area -->
+
+	<!-- Start Banner Area -->
+	<section class="banner-area organic-breadcrumb">
+		<div class="container">
+			<div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+				<div class="col-first">
+					<h1>Chi tiết sản phẩm</h1>
+					<nav class="d-flex align-items-center">
+						<a href={% url 'home' %}>Home<span class="lnr lnr-arrow-right"></span></a>
+						<a href="#">Shop<span class="lnr lnr-arrow-right"></span></a>
+						<a href={% url "single-product" %}>product-details</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End Banner Area -->
+
+	<!--================Single Product Area =================-->
+	<div class="product_image_area">
+		<div class="container">
+			<div class="row s_product_inner">
+				<div class="col-lg-6">
+					<div class="s_Product_carousel">
+						<div class="single-prd-item">
+							<img class="img-fluid" src="{{  product.image_url}}" alt={{product.name}}>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-5 offset-lg-1">
+					<div class="s_product_text">
+						<h3>{{ product.name }}</h3>
+						<h2>${{ product.discounted_price }}</h2>
+						<ul class="list">
+							<li><a class="active" href="#"><span>Category</span> : {{ product.product_category }}</a>
+							</li>
+							<li><a href="#"><span>Availibility</span> : {{ product.stock }}</a></li>
+						</ul>
+						<p>{{ product.description}}.</p>
+						<div class="product_count">
+							<label for="qty">Quantity:</label>
+							<input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
+								class="input-text qty">
+
+							<button onclick="var result = document.getElementById('sst'); 
+											 var sst = parseInt(result.value); 
+											 var maxStock = {{ product.stock }};
+											 if (!isNaN(sst) && sst < maxStock) { 
+												 result.value = sst + 1; 
+											 } else { 
+												 alert('Maximum stock limit reached!'); 
+											 } 
+											 return false;" class="increase items-count" type="button">
+								<i class="lnr lnr-chevron-up"></i>
+							</button>
+
+							<button onclick="var result = document.getElementById('sst'); 
+											 var sst = parseInt(result.value); 
+											 if (!isNaN(sst) && sst > 1) { 
+												 result.value = sst - 1; 
+											 } 
+											 return false;" class="reduced items-count" type="button">
+								<i class="lnr lnr-chevron-down"></i>
+							</button>
+						</div>
+						<div class="card_area d-flex align-items-center">
+							<a class="primary-btn" href="#" onclick="addToCart({{ product.id }})">Thêm vào giỏ</a>
+							<a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+							<a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--================End Single Product Area =================-->
+
+	<!--================Product Description Area =================-->
+	<section class="product_description_area">
+		<div class="container">
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+						aria-selected="true">Mô tả</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+						aria-controls="profile" aria-selected="false">Thông số kỹ thuật
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+						aria-controls="contact" aria-selected="false">Bình luận</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" id="review-tab" data-toggle="tab" href="#review" role="tab"
+						aria-controls="review" aria-selected="false">Đánh giá</a>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<p>Beryl Cook là một trong những nghệ sĩ tài năng và hài hước nhất của Vương quốc Anh. Những bức
+						tranh của Beryl thường có những người phụ nữ
+						với đủ hình dáng và kích cỡ, tận hưởng cuộc sống. Sinh ra trong khoảng thời gian giữa hai cuộc
+						chiến tranh thế giới, Beryl Cook cuối cùng đã rời
+						trường Kendrick ở Reading khi mới 15 tuổi, sau đó theo học tại một trường dạy văn thư và làm
+						việc trong một công ty bảo hiểm. Sau khi chuyển
+						đến London và rồi đến Hampton, cô kết hôn với người hàng xóm từ Reading, John Cook. Ông là một
+						sĩ quan trong Hải quân Thương mại và sau khi
+						rời biển vào năm 1956, họ đã mua một quán rượu trong một năm trước khi John nhận công việc tại
+						Nam Rhodesia với một công ty ô tô. Beryl đã
+						mua cho con trai mình một bộ màu nước, và khi chỉ cho cậu bé cách sử dụng nó, cô nhận thấy mình
+						cũng khá thích vẽ. Sau đó, John đã mua
+						cho cô một bộ màu vẽ của trẻ con vào sinh nhật và chính với bộ màu này, cô đã tạo ra tác phẩm
+						quan trọng đầu tiên của mình, một bức chân
+						dung nửa người của một người phụ nữ da màu với vẻ mặt vô hồn và đôi ngực xệ. Bức tranh này đã
+						được chồng của Beryl đặt tên là 'Hangover'.
+					</p>
+					<p>Việc lên kế hoạch bữa ăn cho một người đôi khi rất khó khăn. Tuy nhiên, ngày càng có nhiều sách
+						nấu ăn và trang web trên Internet chuyên về việc
+						nấu ăn cho một người. Ly hôn, cái chết của người bạn đời hoặc con cái lớn rời nhà để học đại học
+						là những lý do khiến một người quen nấu ăn cho
+						nhiều người phải học cách điều chỉnh những thói quen nấu nướng trước đó để phù hợp với việc nấu
+						ăn cho một người, giúp giảm bớt lượng thức ăn
+						và công sức nấu nướng.</p>
+				</div>
+
+				<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="table-responsive">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td>
+										<h5>Chiều rộng</h5>
+									</td>
+									<td>
+										<h5>128mm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Dài</h5>
+									</td>
+									<td>
+										<h5>508mm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Sâu</h5>
+									</td>
+									<td>
+										<h5>85mm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Cân nặng</h5>
+									</td>
+									<td>
+										<h5>52gm</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Đảm bảo chất lượng</h5>
+									</td>
+									<td>
+										<h5>Có</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>Thời gian bảo hành</h5>
+									</td>
+									<td>
+										<h5>12 tháng</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>
+											Khi đóng gói</h5>
+									</td>
+									<td>
+										<h5>Không chạm tay vào</h5>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<h5>
+											Dung tích hộp chứa</h5>
+									</td>
+									<td>
+										<h5>60pcs</h5>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="comment_list">
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src={% static "img/product/review-1.png" %} alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<h5>12 tháng 2, 2018 lúc 05:56 </h5>
+											<a class="reply_btn" href="#">Trả lời</a>
+										</div>
+									</div>
+									<p>Mình vừa nhận được đôi giày thể thao và thật sự rất ưng ý. Giày có thiết kế rất
+										hiện đại và trẻ trung, phù hợp với nhiều phong cách khác nhau. Chất liệu vải rất
+										nhẹ và thoáng khí, khi mang vào cảm giác rất thoải mái, không bị bí chân hay mỏi
+										dù đi lâu. Đặc biệt, đế giày được làm từ vật liệu chống trơn trượt, giúp mình tự
+										tin hơn khi di chuyển, nhất là khi đi bộ hay chạy bộ. Giao hàng nhanh chóng,
+										đóng gói cẩn thận. Mình chắc chắn sẽ mua thêm sản phẩm của cửa hàng này trong
+										tương lai!</p>
+								</div>
+								<div class="review_item reply">
+									<div class="media">
+										<div class="d-flex">
+											<img src={% static "img/product/review-2.png" %} alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<h5>12 tháng 2, 2018 lúc 05:56 </h5>
+											<a class="reply_btn" href="#">Trả lời</a>
+										</div>
+									</div>
+									<p>Đôi giày thể thao này hoàn toàn vượt ngoài sự mong đợi của mình. Mình đã sử dụng
+										rất nhiều đôi giày thể thao trước đây, nhưng đôi này thực sự rất khác biệt. Chất
+										liệu mềm mại, dễ chịu, và rất êm ái khi đi. Đặc biệt, phần đế giày rất êm và
+										chắc chắn, giúp giảm bớt tác động khi di chuyển nhiều. Mình đã đi bộ và chạy thử
+										vài ngày và không có cảm giác đau chân hay mỏi. Hơn nữa, màu sắc của giày cũng
+										rất đẹp, đúng như hình ảnh quảng cáo. Dịch vụ giao hàng của cửa hàng cũng rất
+										nhanh chóng và chuyên nghiệp. Mình rất hài lòng và sẽ tiếp tục ủng hộ sản phẩm
+										của shop</p>
+								</div>
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src={% static "img/product/review-3.png" %} alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<h5>12 tháng 2, 2018 lúc 05:56 </h5>
+											<a class="reply_btn" href="#">Trả lời</a>
+										</div>
+									</div>
+									<p>Mua đôi giày này sau khi tham khảo rất nhiều đánh giá và thật sự không thất
+										vọng. Giày có thiết kế đẹp, tinh tế và rất nhẹ nhàng, không cảm thấy nặng chân
+										khi mang. Đặc biệt là phần đệm chân rất êm, tạo cảm giác như đang đi trên mây,
+										rất phù hợp cho những ai yêu thích thể thao và cần một đôi giày hỗ trợ tốt cho
+										việc di chuyển lâu dài. Mình đã thử chạy và tập luyện vài buổi và cảm thấy rất
+										thoải mái, không bị chật hay đau chân như một số đôi giày khác. Giao hàng cũng
+										rất nhanh và đóng gói cẩn thận. Sản phẩm rất đáng để mua!</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="review_box">
+								<h4>Đăng bình luận</h4>
+								<form class="row contact_form" action="contact_process.php" method="post"
+									id="contactForm" novalidate="novalidate">
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="text" class="form-control" id="name" name="name"
+												placeholder="Your Full name">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="email" class="form-control" id="email" name="email"
+												placeholder="Email Address">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="text" class="form-control" id="number" name="number"
+												placeholder="Phone Number">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" name="message" id="message" rows="1"
+												placeholder="Message"></textarea>
+										</div>
+									</div>
+									<div class="col-md-12 text-right">
+										<button type="submit" value="submit" class="btn primary-btn">Đăng ngay</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade show active" id="review" role="tabpanel" aria-labelledby="review-tab">
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="row total_rate">
+								<div class="col-6">
+									<div class="box_total">
+										<h5>Overall</h5>
+										<h4>4.0</h4>
+										<h6>(03 Reviews)</h6>
+									</div>
+								</div>
+								<div class="col-6">
+									<div class="rating_list">
+										<h3>Based on 3 Reviews</h3>
+										<ul class="list">
+											<li><a href="#">5 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">4 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">3 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">2 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">1 Star <i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i><i
+														class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="review_list">
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src={% static "img/product/review-1.png" %} alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+									</div>
+									<p>Giày thể thao này thật sự là một lựa chọn tuyệt vời cho những ai đang tìm kiếm
+										một đôi giày vừa đẹp, vừa tiện lợi. Mình dùng để chạy bộ mỗi sáng và cảm giác
+										rất ổn định, đế giày có độ bám rất tốt, không bị trơn trượt ngay cả khi chạy
+										ngoài trời ẩm ướt. Đặc biệt, giày rất nhẹ và thoáng khí, không gây bí hay khó
+										chịu cho chân khi mang lâu. Thiết kế đơn giản nhưng lại rất hợp xu hướng, dễ
+										phối đồ. Dịch vụ của cửa hàng rất tốt, giao hàng nhanh chóng và sản phẩm được
+										đóng gói rất cẩn thận. Mình thực sự rất hài lòng và sẽ giới thiệu cho bạn bè!
+									</p>
+								</div>
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src={% static "img/product/review-2.png" %} alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+									</div>
+									<p>Giày thể thao này thật sự là một lựa chọn tuyệt vời cho những ai đang tìm kiếm
+										một đôi giày vừa đẹp, vừa tiện lợi. Mình dùng để chạy bộ mỗi sáng và cảm giác
+										rất ổn định, đế giày có độ bám rất tốt, không bị trơn trượt ngay cả khi chạy
+										ngoài trời ẩm ướt. Đặc biệt, giày rất nhẹ và thoáng khí, không gây bí hay khó
+										chịu cho chân khi mang lâu. Thiết kế đơn giản nhưng lại rất hợp xu hướng, dễ
+										phối đồ. Dịch vụ của cửa hàng rất tốt, giao hàng nhanh chóng và sản phẩm được
+										đóng gói rất cẩn thận. Mình thực sự rất hài lòng và sẽ giới thiệu cho bạn bè!
+									</p>
+								</div>
+								<div class="review_item">
+									<div class="media">
+										<div class="d-flex">
+											<img src={% static "img/product/review-3.png" %} alt="">
+										</div>
+										<div class="media-body">
+											<h4>Blake Ruiz</h4>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+									</div>
+									<p>Giày thể thao này thật sự là một lựa chọn tuyệt vời cho những ai đang tìm kiếm
+										một đôi giày vừa đẹp, vừa tiện lợi. Mình dùng để chạy bộ mỗi sáng và cảm giác
+										rất ổn định, đế giày có độ bám rất tốt, không bị trơn trượt ngay cả khi chạy
+										ngoài trời ẩm ướt. Đặc biệt, giày rất nhẹ và thoáng khí, không gây bí hay khó
+										chịu cho chân khi mang lâu. Thiết kế đơn giản nhưng lại rất hợp xu hướng, dễ
+										phối đồ. Dịch vụ của cửa hàng rất tốt, giao hàng nhanh chóng và sản phẩm được
+										đóng gói rất cẩn thận. Mình thực sự rất hài lòng và sẽ giới thiệu cho bạn bè!
+									</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="review_box">
+								<h4> Thêm Đánh giá</h4>
+								<p>Đánh giá của bạn:</p>
+								<ul class="list">
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+									<li><a href="#"><i class="fa fa-star"></i></a></li>
+								</ul>
+								<p>Tuyệt vời</p>
+								<form class="row contact_form" action="contact_process.php" method="post"
+									id="contactForm" novalidate="novalidate">
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="text" class="form-control" id="name" name="name"
+												placeholder="Your Full name" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Your Full name'">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="email" class="form-control" id="email" name="email"
+												placeholder="Email Address" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Email Address'">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="text" class="form-control" id="number" name="number"
+												placeholder="Phone Number" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Phone Number'">
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" name="message" id="message" rows="1"
+												placeholder="Review" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Review'"></textarea></textarea>
+										</div>
+									</div>
+									<div class="col-md-12 text-right">
+										<button type="submit" value="submit" class="primary-btn">Submit Now</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--================End Product Description Area =================-->
+
+	<!-- Start related-product Area -->
+	<section class="related-product-area section_gap_bottom">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-lg-6 text-center">
+					<div class="section-title">
+						<h1>Deals of the Week</h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+							labore et dolore
+							magna aliqua.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-9">
+					<div class="row">
+						{% for product in products_deal %}
+						<div class="col-lg-4 col-md-4 col-sm-6 mb-20">
+							<div class="single-related-product d-flex">
+								<a href={% url 'single-product' %}?id={{ product.id}}><img
+										style="width: 70px; height: 70px" src={{ product.image_url }} alt="" /></a>
+								<div class="desc">
+									<a href={% url 'single-product' %}?id={{ product.id}}
+										class="title">{{product.name}}</a>
+									<div class="price">
+										<h6>${{product.discounted_price}}</h6>
+										<h6 class="l-through">${{product.price}}</h6>
+									</div>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="ctg-right">
+						<a href="#" target="_blank">
+							<img class="img-fluid d-block mx-auto" src="img/category/c5.jpg" alt="">
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End related-product Area -->
+
+	<!-- start footer Area -->
+	<footer class="footer-area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6>Về chúng tôi</h6>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6>Bản tin</h6>
+						<p>Luôn cập nhật những thông tin mới nhất của chúng tôi</p>
+						<div class="" id="mc_embed_signup">
+							<form target="_blank" novalidate="true"
+								action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+								method="get" class="form-inline">
+								<div class="d-flex flex-row">
+									<input class="form-control" name="EMAIL" placeholder="Nhập Email"
+										onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
+										required="" type="email" />
+
+									<button class="click-btn btn btn-default">
+										<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+									</button>
+									<div style="position: absolute; left: -5000px">
+										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value=""
+											type="text" />
+									</div>
+
+									<!-- <div class="col-lg-4 col-md-4">
+												<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+											</div>  -->
+								</div>
+								<div class="info"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<div class="single-footer-widget mail-chimp">
+						<h6 class="mb-20">Nguồn cấp dữ liệu Instagram</h6>
+						<ul class="instafeed d-flex flex-wrap">
+							<li><img src={% static "img/i1.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i2.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i3.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i4.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i5.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i6.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i7.jpg" %} alt="" /></li>
+							<li><img src={% static "img/i8.jpg" %} alt="" /></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6>Theo dõi chúng tôi</h6>
+						<p>Chúng ta hãy hòa đồng</p>
+						<div class="footer-social d-flex align-items-center">
+							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+							<a href="#"><i class="fa fa-dribbble"></i></a>
+							<a href="#"><i class="fa fa-behance"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+				<p class="footer-text m-0">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>
+						document.write(new Date().getFullYear());
+					</script>
+					Mọi quyền được bảo lưu | Mẫu này được thực hiện với
+					<i class="fa fa-heart-o" aria-hidden="true"></i> bởi
+					<a href="https://colorlib.com" target="_blank">Nhóm 4</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+			</div>
+		</div>
+	</footer>
+	<!-- End footer Area -->
+
+	<script src="{% static  'js/vendor/jquery-2.2.4.min.js' %}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+		integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+		crossorigin="anonymous"></script>
+	<script src="{% static  'js/vendor/bootstrap.min.js' %}"></script>
+	<script src="{% static  'js/jquery.ajaxchimp.min.js' %}"></script>
+	<script src="{% static  'js/jquery.nice-select.min.js' %}"></script>
+	<script src="{% static  'js/jquery.sticky.js' %}"></script>
+	<script src="{% static  'js/nouislider.min.js' %}"></script>
+	<script src="{% static  'js/countdown.js' %}"></script>
+	<script src="{% static  'js/jquery.magnific-popup.min.js' %}"></script>
+	<script src="{% static  'js/owl.carousel.min.js' %}"></script>
+	<!--gmaps Js-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+	<script src="{% static  'js/gmaps.min.js' %}"></script>
+	<script src="{% static  'js/main.js' %}"></script>
+	<script>
+		function addToCart(productId) {
+			const qty = document.getElementById('sst').value;
+			window.location.href = `/add-cart/${productId}/?quantity=${qty}&price={{ discounted_price }}`;
+		}
+	</script>
+	<script>
+		window.onload = function () {
+			// Lấy số lượng từ localStorage nếu có
+			const savedCartCount = localStorage.getItem("cartCount");
+
+			if (savedCartCount) {
+				document.getElementById("cart-count").innerText = savedCartCount;
+			} else {
+				document.getElementById("cart-count").innerText = "0";
+			}
+		};  
+	</script>
+
+</body>
+
+</html>

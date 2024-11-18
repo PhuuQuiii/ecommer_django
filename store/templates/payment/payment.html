@@ -1,0 +1,75 @@
+{% extends 'payment/base_layout.html' %}
+
+{% block content %}
+  <h3>{{ title }}</h3>
+  <div class="table-responsive">
+    <form action="{% url 'payment' %}" id="create_form" method="post">
+      {% csrf_token %}
+
+      <!-- Loại hàng hóa -->
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="order_type" style="width: 150px; font-weight: bold; margin-right: 10px;">Loại hàng hóa</label>
+        <input type="text" id="order_type" name="order_type" class="form-control" readonly value="Thanh toán hóa đơn" style="background-color: #f8f9fa;" />
+      </div>
+
+      <!-- Mã hóa đơn -->
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="order_id" style="width: 150px; font-weight: bold; margin-right: 10px;">Mã hóa đơn</label>
+        <input type="text" id="order_id" name="order_id" class="form-control" readonly value="{% now 'YmdHis' %}" style="background-color: #f8f9fa;" />
+      </div>
+
+      <!-- Số tiền -->
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="amount" style="width: 150px; font-weight: bold; margin-right: 10px;">Số tiền</label>
+        <input type="text" id="amount" name="amount" class="form-control" readonly value="{{ total_price }}" style="background-color: #f8f9fa;" />
+      </div>
+
+      <!-- Nội dung thanh toán -->
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="order_desc" style="width: 150px; font-weight: bold; margin-right: 10px;">Nội dung thanh toán</label>
+        <input type="text" id="order_desc" name="order_desc" class="form-control" readonly value="Thanh toán đơn hàng thời gian: {% now 'Y-m-d H:i:s' %}" style="background-color: #f8f9fa;" />
+      </div>
+
+      <!-- Ngân hàng -->
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="bank_code" style="width: 150px; font-weight: bold; margin-right: 10px;">Ngân hàng</label>
+        <select name="bank_code" id="bank_code" class="form-control">
+          <option value="">Không chọn</option>
+          <option value="NCB">Ngan hang NCB</option>
+          <option value="AGRIBANK">Ngan hang Agribank</option>
+          <option value="SCB">Ngan hang SCB</option>
+          <option value="SACOMBANK">Ngan hang SacomBank</option>
+          <option value="EXIMBANK">Ngan hang EximBank</option>
+          <option value="MSBANK">Ngan hang MSBANK</option>
+          <option value="NAMABANK">Ngan hang NamABank</option>
+          <option value="VNMART">Vi dien tu VnMart</option>
+          <option value="VIETINBANK">Ngan hang Vietinbank</option>
+          <option value="VIETCOMBANK">Ngan hang VCB</option>
+          <option value="HDBANK">Ngan hang HDBank</option>
+          <option value="DONGABANK">Ngan hang Dong A</option>
+          <option value="TPBANK">Ngân hàng TPBank</option>
+          <option value="OJB">Ngân hàng OceanBank</option>
+          <option value="BIDV">Ngân hàng BIDV</option>
+          <option value="TECHCOMBANK">Ngân hàng Techcombank</option>
+          <option value="VPBANK">Ngan hang VPBank</option>
+          <option value="MBBANK">Ngan hang MBBank</option>
+          <option value="ACB">Ngan hang ACB</option>
+          <option value="OCB">Ngan hang OCB</option>
+          <option value="IVB">Ngan hang IVB</option>
+          <option value="VISA">Thanh toan qua VISA/MASTER</option>
+        </select>
+      </div>
+
+      <!-- Ngôn ngữ -->
+      <div class="form-group" style="display: flex; align-items: center; margin-bottom: 15px;">
+        <label for="language" style="width: 150px; font-weight: bold; margin-right: 10px;">Ngôn ngữ</label>
+        <select name="language" id="language" class="form-control">
+          <option value="vn">Tiếng Việt</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-default">Thanh toán Redirect</button>
+    </form>
+  </div>
+{% endblock %}
