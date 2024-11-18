@@ -23,8 +23,8 @@ GOOGLE_MAPS_API_KEY = 'AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-CSRF_TRUSTED_ORIGINS = []
+ALLOWED_HOSTS = ['ecommerdjango-production.up.railway.app', 'https://ecommerdjango-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://ecommerdjango-production.up.railway.app']
 AUTH_USER_MODEL = 'auth.User'  
 
 
@@ -104,11 +104,11 @@ DATABASES = {
 
     'default':{
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('RAILWAY_PRIVATE_DOMAIN'),  # Use the private endpoint
-        'PORT': os.getenv('DB_PORT'), 
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': 'autorack.proxy.rlwy.net',  # Use the private endpoint
+        'PORT': '54411', 
     }
 }
 
