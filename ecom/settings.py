@@ -170,7 +170,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # WSGI_APPLICATION = 'vnpay_python.wsgi.application'
 
 # VNPAY CONFIG
-VNPAY_RETURN_URL = 'http://localhost:8000/payment_return'  # get from config
+VNPAY_RETURN_URL = 'https://ecommerdjango-production.up.railway.app/payment_return'  # get from config
 VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'  # get from config
 VNPAY_API_URL = 'https://sandbox.vnpayment.vn/merchant_webapi/api/transaction'
 VNPAY_TMN_CODE = 'YX88K1FI'  # Website ID in VNPAY System, get from config
