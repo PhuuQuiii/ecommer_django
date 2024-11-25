@@ -710,7 +710,7 @@ def shipped_dash(request):
         return redirect('home')
 
 def orders(request, pk):
-    if request.user.is_authenticated and request.user.is_superuser:
+    if request.user.is_authenticated or request.user.is_superuser:
         order = Order.objects.get(id=pk)
         items = OrderItem.objects.filter(order=pk)
         return render(request, 'orders.html', {"order": order, "items": items})
@@ -1105,3 +1105,11 @@ def refund(request):
 
 def forgetPassword(request):
     return render(request, 'forgetPassword.html', {})
+
+def user_orders(request):                                                                                                                                                                                                                                                          
+    if request.user.is_authenticated:
+        orders = Order.objects.filter(user=request.user)
+        return render(request, 'user_orders.html', {'orders': orders})
+    else:
+        messages.error(request, "You Must Be Logged In To Access That Page!!")
+        return redirect('home')

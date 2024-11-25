@@ -34,7 +34,6 @@
 
 <body>
 
-    <!-- Start Header Area -->
     <header class="header_area sticky-header">
         <div class="main_menu">
             <nav class="navbar navbar-expand-lg navbar-light main_box">
@@ -52,7 +51,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                            <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Trang chủ</a></li>
+                            <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Trang Chủ</a></li>
                             
                             <!-- Shop dropdown -->
                             <li class="nav-item submenu dropdown">
@@ -79,11 +78,11 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Các Trang Khác</a>
                                 <ul class="dropdown-menu">
                                     {% if user.is_authenticated %}
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Hồ sơ</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'update_profile' %}">Cập nhật hồ sơ</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'profile' %}">Hồ Sơ</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'update_profile' %}">Cập Nhật Hồ Sơ</a></li>
                                         <!-- Link Logout -->
                                         <li class="nav-item">
-                                          <a class="nav-link" href="{% url 'logout' %}" id="logout-link">Đăng xuất</a>
+                                          <a class="nav-link" href="{% url 'logout' %}" id="logout-link">Đăng Xuất</a>
                                         </li>
                                         <script>
                                           document.getElementById("logout-link").addEventListener("click", function() {
@@ -99,11 +98,11 @@
                                           });
                                         </script>
                                     {% else %}
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Đăng ký</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Đăng nhập</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Đăng Ký</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Đăng Nhập</a></li>
                                     {% endif %}
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'updatePassword' %}">Cập nhật mật khẩu</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'tracking' %}">Theo dõi</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'updatePassword' %}">Cập Nhật Mật Khẩu</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'tracking' %}">Theo Dõi</a></li>
                                 </ul>
                             </li>
     
@@ -121,8 +120,6 @@
                                   </ul>
                               </li>
                           {% endif %}
-
-    
                             <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Liên hệ</a></li>
                         </ul>
     
@@ -150,19 +147,19 @@
             <div class="container">
                 <form method="POST" action="{% url 'product_search' %}">
                     {% csrf_token %}
-                    <input type="text" name="query" class="form-control" placeholder="Tìm kiếm"/>
+                    <input type="text" name="query" class="form-control" placeholder="Tìm kiếm sản phẩm"/>
                     <button type="submit" class="btn"><span class="lnr lnr-magnifier"></span></button>
                 </form>
             </div>
         </div>
     </header>
-  
-  <script>
-      // Toggle search input visibility
-      document.querySelector('.search').addEventListener('click', function() {
-          document.getElementById('search_input_box').classList.toggle('show');
-      });
-  </script>
+
+    <script>
+        // Toggle search input visibility
+        document.querySelector('.search').addEventListener('click', function () {
+            document.getElementById('search_input_box').classList.toggle('show');
+        });
+    </script>
     <!-- End Header Area -->
 
     <!-- Start Banner Area -->
@@ -170,7 +167,7 @@
         <div class="container">
             <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
                 <div class="col-first">
-                    <h1>Thông tin thanh toán</h1>
+                    <h1>Đơn hàng chưa vận chuyển</h1>
                     <nav class="d-flex align-items-center">
                         <a href={ % url 'home' %}>Trang chủ<span class="lnr lnr-arrow-right"></span></a>
                         <a href={ % url 'single-product' %}>Thanh toán</a>
@@ -184,68 +181,54 @@
     <!--================Checkout Area =================-->
     <section class="checkout_area section_gap">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <div class="card">
-                        <div class="card-header">
-                            Tóm tắt đơn hàng
-                        </div>
-                        <div class="card-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Sản phẩm</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>
-                                        <th>Tổng tiền</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for product in products %}
-                                    <tr>
-                                        <td>{{ product.name }}</td>
-                                        <td>{{ product.discounted_price }}</td>
-                                        <td>{{ product.quantity }}</td>
-                                        <td>{{ product.total_price }}</td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                            <h5>Tổng tiền: {{ total_price }}</h5>
-                        </div>
-                    </div>
-                    <br/><br/>
-                    <div class="card">
-                        <div class="card-header">
-                            Thông tin vận chuyển
-                        </div>
-                        <div class="card-body">
+            {% if messages %}
+            <div>
+                {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
 
-                          Tên: {{ shipping_info.shipping_full_name }}<br/>
-                          Email: {{ shipping_info.shipping_email }}<br/>
-                          Địa chỉ 1: {{ shipping_info.shipping_address1 }}<br/>
-                          Địa chỉ 2: {{ shipping_info.shipping_address2 }}<br/>
-                          Thành phố: {{ shipping_info.shipping_city }}<br/>
-                          Tỉnh: {{ shipping_info.shipping_state }}<br/>
-                          Mã thành phố: {{ shipping_info.shipping_zipcode }}<br/>
-                          Quốc gia: {{ shipping_info.shipping_country }}<br/>
-                          <br/>
-                          <a href="{% url 'checkout' %}" class="btn btn-outline-secondary">Cập nhật vận chuyển</a>
-                        </div>
-                      </div>
-                      <br/><br/>
-                      <br/>
-
-                      <a class="btn btn-secondary" href="{% url 'index' %}">Thanh toán ngay</a>
-                    </form>
-                    <br/>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-10">
+                    <table class="table table-striped table-hover table-bordered w-100">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" style="width: 10%;">Đơn hàng</th>
+                                <th scope="col" style="width: 25%;">Giá</th>
+                                <th scope="col" style="width: 30%;">Email Khách hàng</th>
+                                <th scope="col" style="width: 20%;">Ngày đặt hàng</th>
+                                <th scope="col" style="width: 15%;">Trạng Thái</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in orders %}
+                            <tr>
+                                <td><a href="{% url 'orders' item.id %}">{{ item.id }}</a></td>
+                                <td>{{ item.amount_paid }}</td>
+                                <td>{{ item.email }}</td>
+                                <td>{{ item.date_ordered }}</td>
+                                    <td>
+                                        {% if item.shipped == 0 %}
+                                            <div>Đang được xử lý</div>
+                                        {% elif item.shipped == 1 %}
+                                            <div>Đang giao</div>
+                                        {% else %}
+                                            <div>Trạng thái không xác định</div>
+                                        {% endif %}
+                                    </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <br /><br />
                 </div>
             </div>
         </div>
     </section>
-    
-    
-    
+
     <!--================End Checkout Area =================-->
 
     <!-- start footer Area -->
@@ -278,9 +261,6 @@
                                             type="text" />
                                     </div>
 
-                                    <!-- <div class="col-lg-4 col-md-4">
-												<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
-											</div>  -->
                                 </div>
                                 <div class="info"></div>
                             </form>
@@ -322,7 +302,7 @@
                     <script>
                         document.write(new Date().getFullYear());
                     </script>
-                   Mọi quyền được bảo lưu | Mẫu này được thực hiện với
+                    Mọi quyền được bảo lưu | Mẫu này được thực hiện với
                     <i class="fa fa-heart-o" aria-hidden="true"></i> bởi
                     <a href="https://colorlib.com" target="_blank">Nhóm 4</a>
                     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -334,7 +314,9 @@
 
 
     <script src="{% static  'js/vendor/jquery-2.2.4.min.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
     <script src="{% static  'js/vendor/bootstrap.min.js' %}"></script>
     <script src="{% static  'js/jquery.ajaxchimp.min.js' %}"></script>
     <script src="{% static  'js/jquery.nice-select.min.js' %}"></script>
@@ -347,16 +329,16 @@
     <script src="{% static  'js/gmaps.min.js' %}"></script>
     <script src="{% static  'js/main.js' %}"></script>
     <script>
-        window.onload = function() {
-          // Lấy số lượng từ localStorage nếu có
-          const savedCartCount = localStorage.getItem("cartCount");
-          
-          if (savedCartCount) {
-              document.getElementById("cart-count").innerText = savedCartCount;
-          } else {
-              document.getElementById("cart-count").innerText = "0";
-          }
-      };  
+        window.onload = function () {
+            // Lấy số lượng từ localStorage nếu có
+            const savedCartCount = localStorage.getItem("cartCount");
+
+            if (savedCartCount) {
+                document.getElementById("cart-count").innerText = savedCartCount;
+            } else {
+                document.getElementById("cart-count").innerText = "0";
+            }
+        };  
     </script>
 </body>
 

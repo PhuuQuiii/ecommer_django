@@ -21,7 +21,7 @@ SECRET_KEY = 'django-insecure-1_c#_*a8*vx8v=@y8$y4m0nn0nh+%nplg%jn5bemr(+9*=*mb&
 GOOGLE_MAPS_API_KEY = 'AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['ecommerdjango-production.up.railway.app', 'https://ecommerdjango-production.up.railway.app']
 # ALLOWED_HOSTS = ['ecommerdjango-production.up.railway.app', 'localhost', '127.0.0.1']

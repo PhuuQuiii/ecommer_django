@@ -109,15 +109,20 @@
                           </li>
   
                           <!-- Orders dropdown for admin -->
-                          {% if user.is_superuser %}
-                              <li class="nav-item submenu dropdown">
-                                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Đơn đặt hàng</a>
-                                  <ul class="dropdown-menu">
+                          {% if user.is_authenticated %}
+                          <li class="nav-item submenu dropdown">
+                              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Đơn đặt hàng</a>
+                              <ul class="dropdown-menu">
+                                  {% if user.is_superuser %}
                                       <li class="nav-item"><a class="nav-link" href="{% url 'shipped_dash' %}">Đơn hàng đã giao</a></li>
                                       <li class="nav-item"><a class="nav-link" href="{% url 'not_shipped_dash' %}">Đơn hàng chưa giao</a></li>
-                                  </ul>
-                              </li>
-                          {% endif %}
+                                  {% else %}
+                                      <li class="nav-item"><a class="nav-link" href="{% url 'user_orders' %}">Đơn hàng của tôi</a></li>
+                                  {% endif %}
+                              </ul>
+                          </li>
+                      {% endif %}
+
   
                           <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Liên hệ</a></li>
                       </ul>
